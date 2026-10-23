@@ -1,0 +1,64 @@
+---
+import Button from './Button.astro';
+import { nav, site } from '../data/site.js';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer dark">
+  <div class="wrap">
+    <div class="site-footer__cta">
+      <div>
+        <p class="label" data-reveal>(Begin)</p>
+        <h2 class="site-footer__title" data-split>
+          <strong class="h-line">Have a space in mind?</strong>
+          <em class="h-line">Let’s draw it together.</em>
+        </h2>
+      </div>
+      <div data-reveal>
+        <Button enquiry variant="light" dot>Begin a project enquiry</Button>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-footer__cols wrap">
+    <div>
+      <p class="label">(Studios)</p>
+      <ul class="site-footer__list">
+        {site.studios.map(s => <li>{s}</li>)}
+      </ul>
+    </div>
+    <div>
+      <p class="label">(Write)</p>
+      <a class="site-footer__big link-line" href={`mailto:${site.email}`}>{site.email}</a>
+    </div>
+    <div>
+      <p class="label">(Call)</p>
+      <a class="site-footer__big link-line" href={site.phoneHref}>{site.phone}</a>
+    </div>
+    <div>
+      <p class="label">(Follow)</p>
+      <a class="site-footer__big link-line" href={site.instagramUrl} target="_blank" rel="noopener">Instagram</a>
+      <p class="site-footer__small">{site.instagram}</p>
+    </div>
+    <div>
+      <p class="label">(Index)</p>
+      <ul class="site-footer__index">
+        {nav.map(item => <li><a class="link-line" href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </div>
+  </div>
+
+  <div class="site-footer__mark" aria-hidden="true" data-footer-mark>
+    <span>TruQ</span> <span class="is-soft">Design Studio</span>
+  </div>
+
+  <div class="site-footer__bottom">
+    <div class="wrap site-footer__bottom-inner">
+      <p class="label">© {year} TruQ Design Studio</p>
+      <p class="label">Architects | Interior Designers</p>
+      <p class="label"><a class="link-line" href="/privacy/">Privacy</a> · <a class="link-line" href="/terms/">Terms</a></p>
+      <a class="label link-line" href={site.url}>truqdesignstudio.com</a>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,21 @@
+---
+import { marqueeWords } from '../data/site.js';
+
+const { words = marqueeWords } = Astro.props;
+// Two identical runs so the CSS loop is seamless; the second is hidden from assistive tech.
+---
+
+<div class="marquee" data-marquee aria-label={words.join(', ')} role="img">
+  <div class="marquee__track" data-marquee-track>
+    {[0, 1].map(run => (
+      <div class="marquee__run" aria-hidden="true">
+        {words.map((word, i) => (
+          <>
+            <span class:list={['marquee__word', { 'is-soft': i % 2 === 1 }]}>{word}</span>
+            <span class="marquee__dot" />
+          </>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>

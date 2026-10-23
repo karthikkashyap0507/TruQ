@@ -1,0 +1,216 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
+import Stats from '../components/Stats.astro';
+import SectionHead from '../components/SectionHead.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import PressGrid from '../components/PressGrid.astro';
+import CtaGlow from '../components/CtaGlow.astro';
+import Marquee from '../components/Marquee.astro';
+import { projects, getProject, heroSlides, featuredSlugs } from '../data/projects.js';
+import { services } from '../data/services.js';
+import { articles } from '../data/articles.js';
+import { getProjectImages } from '../lib/images.js';
+import minimal from '../assets/misc/minimal-residence.jpg';
+import sukhhmani from '../assets/studio/sukhhmani.jpg';
+
+const slides = heroSlides.map(s => {
+  const project = getProject(s.slug);
+  return { project, image: getProjectImages(s.slug)[s.image - 1] };
+});
+const featured = featuredSlugs.map(getProject);
+---
+
+<Base overlayHeader bodyClass="page-home">
+  <!-- Hero -->
+  <section class="hero dark" data-hero>
+    <div class="hero__slides">
+      {slides.map((s, i) => (
+        <div class:list={['hero__slide', { 'is-active': i === 0 }]} data-hero-slide data-caption={`${s.project.title}, ${s.project.kind}`}>
+          <Image
+            src={s.image}
+            alt={`${s.project.title} — ${s.project.kind} by TruQ Design Studio`}
+            widths={[768, 1080, 1440, 1920, 2400]}
+            sizes="100vw"
+            loading={i === 0 ? 'eager' : 'lazy'}
+            priority={i === 0}
+          />
+        </div>
+      ))}
+    </div>
+    <div class="hero__shade" aria-hidden="true"></div>
+
+    <div class="wrap hero__content">
+      <p class="label hero__label" data-hero-in>(TruQ Design Studio) — Architects &amp; Interior Designers</p>
+      <h1 class="display h1 hero__title" data-split="hero">
+        <span class="h-line">Spaces into living</span>
+        <em class="h-line">works of art.</em>
+      </h1>
+      <div class="hero__row">
+        <p class="hero__text" data-hero-in>A journey of 15+ years designing refined estates, residences, workspaces, hospitality and institutions across the USA, India and Dubai.</p>
+        <div class="hero__actions" data-hero-in>
+          <Button href="/works/" variant="light" dot>View selected works</Button>
+          <Button href="/studio/" variant="ghost-light" arrow={false}>Our studio</Button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap hero__bar" data-hero-in>
+      <span class="label">(Scroll)</span>
+      <p class="label hero__now" aria-live="polite">Now showing — <span data-hero-caption>{slides[0].project.title}, {slides[0].project.kind}</span></p>
+      <div class="hero__dots">
+        {slides.map((s, i) => (
+          <button type="button" class:list={['hero__dot', { 'is-active': i === 0 }]} aria-label={`Show ${s.project.title}`} data-hero-dot={i}>
+            <span></span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Studio intro + stats -->
+  <section class="section intro">
+    <div class="wrap wrap--narrow">
+      <div class="intro__grid">
+        <div class="intro__labels" data-reveal>
+          <p class="label">(The studio)</p>
+          <p class="label intro__since">Journey of 15+ years</p>
+        </div>
+        <div>
+          <p class="statement" data-split>
+            TruQ Design Studio creates some of India’s most refined luxury estates — <em>blending sophistication, minimalism and timeless design inspired by history, geography and vernacular architecture.</em>
+          </p>
+          <div class="intro__cta" data-reveal>
+            <Button href="/studio/">Meet the studio</Button>
+          </div>
+        </div>
+      </div>
+      <Stats class="intro__stats" />
+    </div>
+  </section>
+
+  <!-- Selected works carousel -->
+  <section class="section rule-top works-strip">
+    <div class="wrap">
+      <SectionHead label="Selected works" title="Selected works" soft="from the studio.">
+        <span class="label">({String(featured.length).padStart(2, '0')} of {projects.length})</span>
+        <Button href="/works/">View all works</Button>
+      </SectionHead>
+    </div>
+
+    <div class="carousel" data-carousel>
+      <div class="carousel__viewport" data-carousel-viewport data-cursor="Drag" tabindex="0" aria-label="Selected works — scroll horizontally">
+        <div class="carousel__track" data-carousel-track>
+          {featured.map((p, i) => (
+            <ProjectCard project={p} index={i + 1} class="carousel__item" sizes="(min-width: 1024px) 34vw, 80vw" cursor="Drag" />
+          ))}
+        </div>
+      </div>
+      <div class="wrap carousel__bar">
+        <span class="label">Drag to explore</span>
+        <div class="carousel__progress" aria-hidden="true"><span data-carousel-progress></span></div>
+        <div class="carousel__nav">
+          <button type="button" class="icon-btn" aria-label="Previous project" data-carousel-prev><Icon name="arrow-left" /></button>
+          <button type="button" class="icon-btn is-solid" aria-label="Next project" data-carousel-next><Icon name="arrow" /></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section rule-top services-home">
+    <div class="wrap">
+      <SectionHead label="What we do" title="Architecture, interiors" soft="and everything between.">
+        <Button href="/services/">All services</Button>
+      </SectionHead>
+
+      <ul class="svc-list" data-svc-list>
+        {services.map((s, i) => (
+          <li data-reveal>
+            <a href={`/services/#${s.slug}`} class="svc-row" data-svc-row={i}>
+              <span class="label">({s.no})</span>
+              <span class="svc-row__title">{s.title}</span>
+              <span class="svc-row__text">{s.text}</span>
+              <span class="icon-btn svc-row__arrow"><Icon name="arrow-up-right" /></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="svc-float" aria-hidden="true" data-svc-float>
+      {services.map(s => (
+        <div class="svc-float__img">
+          <Image src={s.image} alt="" widths={[320, 480]} sizes="240px" />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Philosophy -->
+  <section class="section dark philosophy">
+    <div class="wrap philosophy__grid">
+      <div class="philosophy__text">
+        <p class="label" data-reveal>(Philosophy)</p>
+        <ul class="philosophy__lines">
+          <li data-reveal>Clutter space <em>= mental noise.</em></li>
+          <li data-reveal>Empty space <em>= emotional clarity.</em></li>
+          <li data-reveal>Fewer objects <em>= more energy.</em></li>
+        </ul>
+        <p class="body-sm philosophy__note" data-reveal>Guided by nature and sustainability, every TruQ space is edited until only what has a purpose remains — elegance, purpose and enduring value.</p>
+      </div>
+      <figure class="philosophy__figure">
+        <div class="media media--img philosophy__media" data-media-reveal data-parallax>
+          <Image src={minimal} alt="Minimal private residence living room with a blue sofa and marble table" widths={[480, 768, 1080]} sizes="(min-width: 1024px) 34vw, 100vw" />
+        </div>
+        <figcaption class="philosophy__caption">
+          <span class="label">Minimal — Private residence</span>
+          <span class="label">(Interiors)</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Creative note -->
+  <section class="section creative">
+    <div class="wrap wrap--narrow creative__grid">
+      <div class="media media--img creative__portrait" data-media-reveal>
+        <Image src={sukhhmani} alt="Sukhhmani, Creative Head of TruQ Design Studio" widths={[320, 480, 640]} sizes="(min-width: 1024px) 26vw, 70vw" />
+      </div>
+      <div class="creative__body">
+        <p class="label" data-reveal>(Creative note)</p>
+        <blockquote class="quote" data-split>
+          “Create spaces that elevate life through thoughtful design and <em>intentional craftsmanship.”</em>
+        </blockquote>
+        <p class="byline" data-reveal><span class="byline__rule"></span><span class="label label--ink">Sukhhmani — Creative Head, TruQ Design Studio</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Press -->
+  <section class="section rule-top">
+    <div class="wrap">
+      <SectionHead label="Accolades & press" title="Recognised" soft="and published.">
+        <p class="body-sm">Every accolade is a testament to our pursuit of perfection — and to the trust, passion and dedication poured into every project.</p>
+      </SectionHead>
+      <PressGrid />
+    </div>
+  </section>
+
+  <!-- Journal -->
+  <section class="section rule-top">
+    <div class="wrap">
+      <SectionHead label="Studio journal" title="Notes from" soft="the studio.">
+        <Button href="/journal/">All articles</Button>
+      </SectionHead>
+      <div class="card-grid">
+        {articles.slice(0, 3).map(a => <ArticleCard article={a} data-reveal />)}
+      </div>
+    </div>
+  </section>
+
+  <CtaGlow label="(Begin)" title="Ready when you are." button="Tell us about your project" />
+  <Marquee />
+</Base>

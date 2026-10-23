@@ -1,0 +1,79 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site.js';
+
+const types = ['Architecture', 'Interiors', 'Hospitality', 'Workspace', 'Other'];
+---
+
+<div class="enquiry" id="enquiry" hidden data-enquiry-modal data-lenis-prevent>
+  <div class="enquiry__backdrop" data-enquiry-close></div>
+  <div class="enquiry__dialog" role="dialog" aria-modal="true" aria-labelledby="enquiry-title" tabindex="-1">
+    <button class="icon-btn enquiry__close" type="button" aria-label="Close enquiry form" data-enquiry-close>
+      <Icon name="close" />
+    </button>
+
+    <form class="enquiry__form" data-enquiry-form data-endpoint={site.enquiryEndpoint} data-email={site.email} novalidate>
+      <div class="enquiry__head">
+        <p class="label">(Project enquiry)</p>
+        <h2 class="enquiry__title" id="enquiry-title">Tell us about <em>your space.</em></h2>
+        <p class="body-sm">Share a few details and our team will get back to you to plan a first conversation.</p>
+      </div>
+
+      <div class="field-grid">
+        <label class="field">
+          <span class="field__label">Full name</span>
+          <input name="name" type="text" autocomplete="name" placeholder="Your name" required />
+        </label>
+        <label class="field">
+          <span class="field__label">Phone</span>
+          <input name="phone" type="tel" autocomplete="tel" placeholder="+91 98xxx xxxxx" />
+        </label>
+        <label class="field field--full">
+          <span class="field__label">Email</span>
+          <input name="email" type="email" autocomplete="email" placeholder="you@email.com" required />
+        </label>
+
+        <fieldset class="field field--full">
+          <legend class="field__label">Project type</legend>
+          <div class="chips">
+            {types.map((t, i) => (
+              <label class="chip">
+                <input type="radio" name="type" value={t} checked={i === 1} />
+                <span>{t}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <label class="field">
+          <span class="field__label">Location</span>
+          <input name="location" type="text" autocomplete="address-level2" placeholder="City, country" />
+        </label>
+        <label class="field">
+          <span class="field__label">Approx. area</span>
+          <input name="area" type="text" inputmode="numeric" placeholder="sq ft" />
+        </label>
+        <label class="field field--full">
+          <span class="field__label">About the project</span>
+          <textarea name="message" rows="3" placeholder="Tell us about the site, the brief and your timeline..."></textarea>
+        </label>
+      </div>
+
+      <p class="enquiry__error" role="alert" data-enquiry-error></p>
+
+      <button class="btn btn--dark btn--block" type="submit" data-enquiry-submit>
+        <span class="btn__dot" aria-hidden="true"></span>
+        <span data-enquiry-submit-label>Send enquiry</span>
+        <Icon name="arrow" class="btn__arrow" />
+      </button>
+      <p class="enquiry__note">Your details are only used to respond to this enquiry.</p>
+    </form>
+
+    <div class="enquiry__done" hidden data-enquiry-done>
+      <p class="label">(Thank you)</p>
+      <h2 class="enquiry__title">We’ve received <em>your enquiry.</em></h2>
+      <p class="body-sm" data-enquiry-done-text>Our team will be in touch shortly to plan a first conversation.</p>
+      <button class="btn btn--dark" type="button" data-enquiry-close><span>Close</span></button>
+    </div>
+  </div>
+</div>

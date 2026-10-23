@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Button from '../../components/Button.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { articles, formatDate } from '../../data/articles.js';
+
+const [latest, ...rest] = articles;
+---
+
+<Base title="Journal" description="Long-form writing, project notes and short essays from TruQ Design Studio — on luxury residences, interiors and the psychology of the spaces we live in.">
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="label" data-reveal>(Studio journal)</p>
+      <h1 class="display h1 page-hero__title" data-split>
+        <span class="h-line">Notes from</span>
+        <em class="h-line">the studio.</em>
+      </h1>
+      <p class="lead" data-reveal>Long-form writing, project notes and short essays from TruQ Design Studio — on luxury residences, interiors and the psychology of the spaces we live in.</p>
+    </div>
+  </section>
+
+  <section class="journal-feature">
+    <div class="wrap journal-feature__grid">
+      <a href={`/journal/${latest.slug}/`} class="media media--img journal-feature__media" data-media-reveal data-cursor="Read">
+        <Image src={latest.image} alt={latest.title} widths={[480, 768, 1080, 1440]} sizes="(min-width: 1024px) 50vw, 100vw" loading="eager" />
+        <span class="pill"><span class="btn__dot"></span>Latest · {latest.category}</span>
+      </a>
+      <div class="journal-feature__text">
+        <p class="label" data-reveal>{formatDate(latest.date)} — {latest.readTime}</p>
+        <h2 class="h2 journal-feature__title" data-split>{latest.title}</h2>
+        <p class="lead" data-reveal>{latest.excerpt}</p>
+        <div data-reveal>
+          <Button href={`/journal/${latest.slug}/`} variant="dark">Read article</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section rule-top">
+    <div class="wrap">
+      <p class="label journal-all__label" data-reveal>(All articles)</p>
+      <div class="card-grid card-grid--rows">
+        {rest.map(a => <ArticleCard article={a} data-reveal />)}
+      </div>
+    </div>
+  </section>
+</Base>

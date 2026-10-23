@@ -1,0 +1,17 @@
+---
+// The TruQ mark — a window frame forming a T, with the Q tail at the foot — plus wordmark.
+const { href = '/', class: className = '', label = 'TruQ Design Studio — home' } = Astro.props;
+---
+
+<a href={href} class={`logo ${className}`} aria-label={label}>
+  <svg class="logo__mark" viewBox="0 0 30 44" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+    <path d="M1.5 8.5V1.5h27v7" />
+    <path d="M15 1.5v41" />
+    <rect x="1.5" y="12" width="27" height="30.5" />
+    <path d="m25.5 39.5 3.6 3.6" />
+  </svg>
+  <span class="logo__text">
+    <span class="logo__name">TruQ Design Studio</span>
+    <span class="logo__sub">Architects | Interior Designers</span>
+  </span>
+</a>

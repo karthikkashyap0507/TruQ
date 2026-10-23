@@ -1,0 +1,117 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
+import Stats from '../components/Stats.astro';
+import SectionHead from '../components/SectionHead.astro';
+import PressGrid from '../components/PressGrid.astro';
+import Marquee from '../components/Marquee.astro';
+import { services } from '../data/services.js';
+import { site } from '../data/site.js';
+import studioImage from '../assets/misc/living-circular-sofa.jpg';
+import deepaum from '../assets/studio/deepaum-jain.jpg';
+import sukhhmani from '../assets/studio/sukhhmani.jpg';
+
+const people = [
+  { name: 'Deepaum Jain', role: 'Founder & Principal Designer', image: deepaum },
+  { name: 'Sukhhmani', role: 'Creative Head', image: sukhhmani },
+];
+---
+
+<Base title="Studio" description="TruQ Design Studio is a practice of architects and interior designers with a journey of more than fifteen years, working across the USA, India and Dubai.">
+  <section class="page-hero">
+    <div class="wrap wrap--narrow">
+      <p class="label" data-reveal>(Our studio)</p>
+      <h1 class="display h1 page-hero__title" data-split>
+        <span class="h-line">A design practice between</span>
+        <em class="h-line">the USA, India and Dubai.</em>
+      </h1>
+    </div>
+  </section>
+
+  <section class="studio-note">
+    <div class="wrap wrap--narrow studio-note__grid">
+      <div class="media media--img studio-note__media" data-media-reveal data-parallax>
+        <Image src={studioImage} alt="A living room by TruQ Design Studio with a curved sofa and sculpted coffee table" widths={[480, 768, 1080, 1440]} sizes="(min-width: 1024px) 44vw, 100vw" loading="eager" />
+      </div>
+      <div class="studio-note__text">
+        <p class="label" data-reveal>Studio note</p>
+        <p data-reveal>TruQ Design Studio is a practice of architects and interior designers with a journey of more than fifteen years. Our work spans residences, workspaces, hospitality and institutional projects.</p>
+        <p data-reveal>Founded by Deepaum Jain, Founder and Principal Designer, the studio is celebrated for creating India’s most refined luxury estates — blending sophistication, minimalism and timeless design inspired by history, geography and vernacular architecture.</p>
+        <p data-reveal>Guided by nature and sustainability, the team crafts extraordinary spaces that embody elegance, purpose and enduring value. Creative Head Sukhhmani shapes the studio’s vision, fusing innovation with timeless design principles so that every project tells a story.</p>
+        <div data-reveal>
+          <Button href="/process/">How we work</Button>
+        </div>
+      </div>
+    </div>
+    <div class="wrap wrap--narrow">
+      <Stats class="studio-note__stats" />
+    </div>
+  </section>
+
+  <section class="section rule-top">
+    <div class="wrap wrap--narrow">
+      <SectionHead label="Services" title="What we do" />
+      <div class="svc-grid">
+        {services.slice(0, 4).map(s => (
+          <div class="svc-grid__item" data-reveal>
+            <p class="label">({s.no})</p>
+            <h3 class="h4">{s.title}</h3>
+            <p class="body-sm">{s.text}</p>
+          </div>
+        ))}
+      </div>
+      <div class="svc-grid__cta" data-reveal>
+        <Button href="/services/">Explore all services</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section rule-top">
+    <div class="wrap wrap--narrow">
+      <SectionHead label="Team" title="Our people" />
+      <div class="people">
+        {people.map(p => (
+          <figure class="person" data-reveal>
+            <div class="media person__media" data-media-reveal>
+              <Image src={p.image} alt={`${p.name}, ${p.role}, TruQ Design Studio`} widths={[320, 480, 640]} sizes="(min-width: 1024px) 18vw, 45vw" />
+            </div>
+            <figcaption>
+              <span class="h4 person__name">{p.name}</span>
+              <span class="body-sm">{p.role}</span>
+            </figcaption>
+          </figure>
+        ))}
+        <a class="people-card people-card--dark" href={`mailto:${site.email}?subject=${encodeURIComponent('Careers at TruQ Design Studio')}`} data-reveal>
+          <span class="label">(Careers)</span>
+          <span class="people-card__title">Join <em>the studio.</em></span>
+          <span class="icon-btn icon-btn--dark"><Icon name="arrow" /></span>
+        </a>
+        <div class="people-card" data-reveal>
+          <span class="label">(The team)</span>
+          <span>
+            <span class="people-card__num">50+</span>
+            <span class="body-sm">Architects, interior designers and visualisers behind every TruQ project.</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="founder" data-reveal>
+        <p class="label">(Founder’s note)</p>
+        <p class="statement">Deepaum Jain’s work is guided by nature and sustainability — <em>residences, workspaces, hospitality and institutional projects crafted with elegance, purpose and enduring value.</em></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section rule-top">
+    <div class="wrap wrap--narrow">
+      <SectionHead label="Recognition" title="Accolades" soft="& our zines.">
+        <p class="body-sm">These recognitions reflect not just our design expertise, but the trust, passion and dedication we pour into every project.</p>
+      </SectionHead>
+      <PressGrid />
+    </div>
+  </section>
+
+  <Marquee />
+</Base>

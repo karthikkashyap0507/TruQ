@@ -1,0 +1,15 @@
+---
+// Section label + two-tone heading, with an optional aside (button or note) on the right.
+const { label, title, soft, class: className = '' } = Astro.props;
+---
+
+<div class={`section-head ${className}`}>
+  <div class="section-head__main">
+    {label && <p class="label" data-reveal>({label})</p>}
+    <h2 class="h2" data-split>
+      <span class="h-line">{title}</span>
+      {soft && <em class="h-line">{soft}</em>}
+    </h2>
+  </div>
+  {Astro.slots.has('default') && <div class="section-head__aside" data-reveal><slot /></div>}
+</div>

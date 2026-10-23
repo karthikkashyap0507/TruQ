@@ -1,0 +1,16 @@
+---
+import { stats } from '../data/site.js';
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class={`stats ${className}`}>
+  {stats.map(s => (
+    <div class="stat" data-reveal>
+      <p class="stat__value">
+        <span data-count={s.value} data-decimals={s.decimals ?? 0}>{s.decimals ? s.value.toFixed(s.decimals) : s.value}</span><sup>{s.suffix}</sup>
+      </p>
+      <p class="label">{s.label}</p>
+    </div>
+  ))}
+</div>

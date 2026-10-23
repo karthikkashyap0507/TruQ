@@ -1,0 +1,22 @@
+---
+import Base from './Base.astro';
+
+const { title, description, updated } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <section class="page-hero">
+    <div class="wrap wrap--narrow">
+      <p class="label" data-reveal>(Legal)</p>
+      <h1 class="display h1 page-hero__title" data-split>{title}</h1>
+      <p class="label" data-reveal>Last updated {updated}</p>
+    </div>
+  </section>
+  <section class="section--tight">
+    <div class="wrap wrap--narrow">
+      <div class="prose prose--legal">
+        <slot />
+      </div>
+    </div>
+  </section>
+</Base>

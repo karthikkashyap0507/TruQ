@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+---
+
+<Base title="Page not found" description="The page you were looking for could not be found.">
+  <section class="page-hero not-found">
+    <div class="wrap wrap--narrow">
+      <p class="label" data-reveal>(404)</p>
+      <h1 class="display h1 page-hero__title" data-split>
+        <span class="h-line">This room</span>
+        <em class="h-line">hasn’t been designed yet.</em>
+      </h1>
+      <p class="lead" data-reveal>The page you were looking for has moved or no longer exists.</p>
+      <div class="not-found__actions" data-reveal>
+        <Button href="/" variant="dark">Back to home</Button>
+        <Button href="/works/">View selected works</Button>
+      </div>
+    </div>
+  </section>
+</Base>

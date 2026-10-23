@@ -1,0 +1,71 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import Marquee from '../../components/Marquee.astro';
+import { projects, filters, filterCounts } from '../../data/projects.js';
+
+const INITIAL = 9;
+const pad = n => String(n).padStart(2, '0');
+---
+
+<Base title="Works" description="A curated portfolio of residences, estates, hospitality, workspaces and institutional projects by TruQ Design Studio across the USA, India and Dubai.">
+  <section class="page-hero">
+    <div class="wrap wrap--narrow">
+      <p class="label" data-reveal>(Our works)</p>
+      <h1 class="display h1 page-hero__title" data-split>
+        <span class="h-line">Selected works</span>
+        <em class="h-line">from the studio</em>
+      </h1>
+      <p class="lead" data-reveal>A curated portfolio of residences, estates, hospitality, workspaces and institutional projects — over 200 completed and 2.5 million square feet designed across the USA, India and Dubai.</p>
+    </div>
+  </section>
+
+  <div class="works-shell">
+  <div class="filter-bar">
+    <div class="wrap wrap--narrow filter-bar__inner">
+      <div class="filters" role="group" aria-label="Filter projects by discipline" data-filters>
+        {filters.map(f => (
+          <button
+            type="button"
+            class:list={['chip-btn', { 'is-active': f.key === 'all' }]}
+            data-filter={f.key}
+            aria-pressed={f.key === 'all' ? 'true' : 'false'}
+            disabled={filterCounts[f.key] === 0}
+          >
+            {f.label}<sup>{filterCounts[f.key] ? pad(filterCounts[f.key]) : '—'}</sup>
+          </button>
+        ))}
+      </div>
+      <p class="label" aria-live="polite" data-filter-count>({projects.length} projects)</p>
+    </div>
+  </div>
+
+  <section class="section works-index">
+    <div class="wrap wrap--narrow">
+      <div class="works-grid" data-works-grid data-initial={INITIAL}>
+        {projects.map((p, i) => (
+          <ProjectCard
+            project={p}
+            index={i + 1}
+            data-works-item
+            data-tags={p.tags.join(' ')}
+            class:list={{ 'is-extra': i >= INITIAL }}
+            eager={i < 3}
+          />
+        ))}
+      </div>
+      {projects.length > INITIAL && (
+        <div class="works-more">
+          <button type="button" class="btn" data-load-more>
+            <span>Load more projects</span>
+            <Icon name="chevron" class="btn__arrow" />
+          </button>
+        </div>
+      )}
+    </div>
+  </section>
+  </div>
+
+  <Marquee words={['Architecture', 'Interiors', 'Hospitality', 'Workspaces', 'Institutional', 'Master planning']} />
+</Base>

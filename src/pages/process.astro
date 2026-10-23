@@ -1,0 +1,41 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import CtaGlow from '../components/CtaGlow.astro';
+import { stages } from '../data/process.js';
+---
+
+<Base title="Process" description="From the first conversation to the final styled room, every TruQ project moves through six considered stages.">
+  <section class="page-hero">
+    <div class="wrap wrap--narrow">
+      <p class="label" data-reveal>(Our process)</p>
+      <h1 class="display h1 page-hero__title" data-split>
+        <span class="h-line">Six considered stages,</span>
+        <em class="h-line">one crafted journey.</em>
+      </h1>
+      <p class="lead" data-reveal>From the first conversation to the final styled room, every TruQ project moves through the same six stages — so each decision is made at the right moment, and every detail is engineered, not impulsed.</p>
+    </div>
+  </section>
+
+  <section class="process">
+    <div class="wrap wrap--narrow">
+      <div class="process__line" aria-hidden="true"><span data-process-progress></span></div>
+      <ol class="stages">
+        {stages.map((s, i) => (
+          <li class:list={['stage', { 'is-flipped': i % 2 === 1 }]}>
+            <div class:list={['media', 'media--img', 'stage__media', { 'media--paper': s.paper }]} data-media-reveal>
+              <Image src={s.image} alt={`${s.title} — TruQ Design Studio process`} widths={[480, 768, 1080]} sizes="(min-width: 1024px) 40vw, 100vw" />
+            </div>
+            <div class="stage__text">
+              <p class="label" data-reveal>Stage ({s.no})</p>
+              <h2 class="h3" data-split>{s.title}</h2>
+              <p data-reveal>{s.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <CtaGlow label="(Begin)" title="Start with a conversation." button="Begin a project enquiry" />
+</Base>

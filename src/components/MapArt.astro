@@ -1,0 +1,47 @@
+---
+// Abstract street-map artwork for studio cards. Deterministic per seed so builds are stable.
+// Swap for an embedded map once studio addresses are confirmed.
+const { seed = 1 } = Astro.props;
+
+let s = seed * 9301 + 49297;
+const rand = () => {
+  s = (s * 9301 + 49297) % 233280;
+  return s / 233280;
+};
+
+const W = 400;
+const H = 300;
+const blocks = Array.from({ length: 16 }, () => ({
+  x: rand() * W,
+  y: rand() * H,
+  w: 24 + rand() * 60,
+  h: 18 + rand() * 44,
+}));
+const roads = [
+  ...Array.from({ length: 6 }, (_, i) => {
+    const x = (i + 0.4 + rand() * 0.5) * (W / 6);
+    const tilt = (rand() - 0.5) * 60;
+    return { d: `M${x - tilt} -10 L${x + tilt} ${H + 10}`, w: rand() > 0.7 ? 9 : 5 };
+  }),
+  ...Array.from({ length: 5 }, (_, i) => {
+    const y = (i + 0.4 + rand() * 0.5) * (H / 5);
+    const tilt = (rand() - 0.5) * 50;
+    return { d: `M-10 ${y - tilt} L${W + 10} ${y + tilt}`, w: rand() > 0.7 ? 9 : 5 };
+  }),
+];
+const ry = 120 + rand() * 80;
+const river = `M-20 ${ry} C ${W * 0.3} ${ry - 70}, ${W * 0.55} ${ry + 70}, ${W + 20} ${ry - 20}`;
+---
+
+<svg class="map-art" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <rect width={W} height={H} fill="#e4e1db" />
+  {blocks.map(b => <rect x={b.x} y={b.y} width={b.w} height={b.h} rx="2" fill="#d6d2ca" />)}
+  <path d={river} fill="none" stroke="#c9d5d9" stroke-width="14" stroke-linecap="round" />
+  {roads.map(r => <path d={r.d} stroke="#f7f6f3" stroke-width={r.w} stroke-linecap="round" />)}
+  <g class="map-art__pin" transform={`translate(${W / 2} ${H / 2})`}>
+    <circle r="22" fill="#c4a03c" opacity="0.18" class="map-art__pulse" />
+    <circle r="11" fill="#e9dcb4" />
+    <circle r="8" fill="#0d0d10" />
+    <circle r="2.6" fill="#f4f3f0" />
+  </g>
+</svg>

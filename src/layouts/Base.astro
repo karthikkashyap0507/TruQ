@@ -1,0 +1,93 @@
+---
+import '@fontsource-variable/montserrat';
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+import '../styles/components.css';
+import '../styles/pages.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import EnquiryModal from '../components/EnquiryModal.astro';
+import { site } from '../data/site.js';
+
+const {
+  title,
+  description = site.description,
+  image = '/og.jpg',
+  overlayHeader = false,
+  bodyClass = '',
+  type = 'website',
+  jsonLd,
+} = Astro.props;
+
+const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — Architects & Interior Designers`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+
+const organisation = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: site.name,
+  description: site.description,
+  url: site.url,
+  email: site.email,
+  telephone: site.phone.replace(/\s/g, ''),
+  logo: new URL('/favicon.svg', Astro.site).href,
+  image: ogImage,
+  areaServed: ['United States', 'India', 'United Arab Emirates'],
+  founder: { '@type': 'Person', name: 'Deepaum Jain', jobTitle: 'Founder & Principal Designer' },
+  sameAs: [site.instagramUrl],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0d0d10" />
+    <link rel="sitemap" href="/sitemap.xml" />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd ?? organisation)} />
+
+    <script is:inline>
+      (function () {
+        var root = document.documentElement;
+        root.classList.add('js');
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) root.classList.add('motion');
+        // Never leave content hidden if the animation bundle fails to load.
+        setTimeout(function () {
+          if (!window.__truqReady) root.classList.remove('motion');
+        }, 3500);
+      })();
+    </script>
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header overlay={overlayHeader} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <EnquiryModal />
+    <div class="cursor" aria-hidden="true" data-cursor-el><span data-cursor-label></span></div>
+    <script>
+      import '../scripts/main.js';
+    </script>
+  </body>
+</html>

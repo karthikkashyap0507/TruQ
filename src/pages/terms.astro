@@ -1,0 +1,16 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site } from '../data/site.js';
+---
+
+<Legal title="Terms" description="Terms of use for the TruQ Design Studio website." updated="October 2026">
+  <p>By using this website you agree to these terms. If you do not agree, please do not use the site.</p>
+  <h2>Content and imagery</h2>
+  <p>All designs, drawings, renders, photographs and text on this website are the work of TruQ Design Studio or are used with permission, and are protected by copyright. They may not be reproduced, published or used for commercial purposes without our written consent.</p>
+  <h2>No professional advice</h2>
+  <p>Information on this site is provided for general interest. It does not constitute a proposal, quotation or professional advice for any specific project. Project scope, fees and timelines are agreed separately in writing.</p>
+  <h2>External links</h2>
+  <p>Links to third-party sites are provided for convenience; we are not responsible for their content.</p>
+  <h2>Contact</h2>
+  <p>Questions about these terms can be sent to <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+</Legal>

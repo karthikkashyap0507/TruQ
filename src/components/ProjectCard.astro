@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets';
+import { getProjectImages } from '../lib/images.js';
+
+const {
+  project,
+  index,
+  sizes = '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw',
+  class: className = '',
+  eager = false,
+  cursor = 'View',
+  ...rest
+} = Astro.props;
+const images = getProjectImages(project.slug);
+const image = images[(project.card ?? 1) - 1] ?? images[0];
+---
+
+<article class={`project-card ${className}`} {...rest}>
+  <a href={`/works/${project.slug}/`} class="project-card__link" data-cursor={cursor}>
+    <div class="media ratio-4-5 project-card__media">
+      <Image
+        src={image}
+        alt={`${project.title} — ${project.kind} by TruQ Design Studio`}
+        widths={[480, 768, 1080]}
+        sizes={sizes}
+        loading={eager ? 'eager' : 'lazy'}
+        draggable="false"
+      />
+    </div>
+    <div class="project-card__meta">
+      <span class="label">({String(index).padStart(2, '0')})</span>
+      <span class="label">{project.category}</span>
+    </div>
+    <h3 class="h4 project-card__title">{project.title}</h3>
+    <p class="body-sm project-card__summary">{project.summary}</p>
+  </a>
+</article>

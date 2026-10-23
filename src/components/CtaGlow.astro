@@ -1,0 +1,17 @@
+---
+import Button from './Button.astro';
+
+// The warm "glow" call-to-action band used across pages.
+const { label, title, button = 'Begin a project enquiry', align = 'center' } = Astro.props;
+---
+
+<section class:list={['cta-glow', `cta-glow--${align}`]}>
+  <div class="cta-glow__light" aria-hidden="true" data-glow></div>
+  <div class="wrap cta-glow__inner">
+    {label && <p class="label" data-reveal>{label}</p>}
+    <h2 class="h2 cta-glow__title" data-split set:html={title} />
+    <div data-reveal>
+      <Button enquiry variant="dark" dot>{button}</Button>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,557 @@
+/* ==========================================================================
+   TruQ Design Studio — foundations
+   Paper and ink, Montserrat for display, Inter for reading, TruQ gold accent.
+   ========================================================================== */
+
+:root {
+  --paper: #f4f3f0;
+  --paper-2: #efeee9;
+  --ink: #0d0d10;
+  --ink-2: #1b1b1f;
+  --wolf: #46423f;
+  --ash: #76716c;
+  --line: #d5d1cd;
+  --bone: #dbdbce;
+  --bone-soft: #e8e7df;
+  --gold: #c4a03c;
+  --field: #f9f8f6;
+  --on-dark: #f4f3f0;
+  --on-dark-2: #8e8b88;
+  --line-dark: rgba(244, 243, 240, 0.14);
+
+  --font-display: 'Montserrat Variable', 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --gutter: clamp(20px, 4vw, 48px);
+  --wrap: 1240px;
+  --wrap-narrow: 1040px;
+  --section: clamp(84px, 10vw, 144px);
+  --radius-img: 28px;
+  --radius-card: 24px;
+  --radius-sm: 16px;
+  --header-h: 76px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.45s;
+  animation-timing-function: var(--ease-in-out);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Components set their own display; `hidden` must still win. */
+[hidden] {
+  display: none !important;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--paper);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.75;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure,
+blockquote {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 1000;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font: 600 12px/1 var(--font-display);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transform: translateY(-160%);
+  transition: transform 0.3s var(--ease-out);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* ---------- Layout ---------- */
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--wrap) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.wrap--narrow {
+  max-width: calc(var(--wrap-narrow) + var(--gutter) * 2);
+}
+
+.section {
+  padding-block: var(--section);
+}
+
+.section--tight {
+  padding-block: calc(var(--section) * 0.7);
+}
+
+.rule-top {
+  border-top: 1px solid var(--line);
+}
+
+.dark {
+  background: var(--ink);
+  color: var(--on-dark);
+}
+
+/* ---------- Type ---------- */
+
+.label {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--wolf);
+}
+
+.dark .label,
+.label--light {
+  color: var(--on-dark-2);
+}
+
+.label--ink {
+  color: var(--ink);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+}
+
+.display em,
+.h2 em,
+.statement em,
+.h-line--soft {
+  font-style: normal;
+  font-weight: 300;
+  color: var(--ash);
+}
+
+.dark .display em,
+.dark .h2 em,
+.dark .statement em {
+  color: var(--on-dark-2);
+}
+
+.h1 {
+  font-size: clamp(46px, 5.7vw, 84px);
+}
+
+.h1--xl {
+  font-size: clamp(56px, 7.5vw, 108px);
+}
+
+.h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(34px, 3.5vw, 50px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(26px, 2.4vw, 34px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.statement {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(24px, 2.2vw, 31px);
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.lead {
+  font-size: clamp(16px, 1.2vw, 17px);
+  line-height: 1.8;
+  color: var(--wolf);
+  max-width: 520px;
+}
+
+.dark .lead {
+  color: var(--on-dark-2);
+}
+
+.body-sm {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--wolf);
+}
+
+.dark .body-sm {
+  color: var(--on-dark-2);
+}
+
+.num-paren::before {
+  content: '(';
+}
+
+.num-paren::after {
+  content: ')';
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  --btn-bg: transparent;
+  --btn-fg: var(--ink);
+  --btn-bd: var(--line);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 46px;
+  padding: 0 24px;
+  border-radius: 999px;
+  border: 1px solid var(--btn-bd);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.45s var(--ease-out), border-color 0.45s var(--ease-out), background-color 0.45s var(--ease-out);
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--btn-fill, var(--ink));
+  transform: translateY(101%);
+  transition: transform 0.55s var(--ease-out);
+}
+
+.btn:hover::before,
+.btn:focus-visible::before {
+  transform: translateY(0);
+}
+
+.btn:hover,
+.btn:focus-visible {
+  color: var(--btn-fg-hover, var(--paper));
+  border-color: var(--btn-fill, var(--ink));
+}
+
+.btn__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex: none;
+}
+
+.btn__arrow {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  transition: transform 0.45s var(--ease-out);
+}
+
+.btn:hover .btn__arrow {
+  transform: translateX(3px);
+}
+
+.btn--dark {
+  --btn-bg: var(--ink);
+  --btn-fg: var(--paper);
+  --btn-bd: var(--ink);
+  --btn-fill: #2a2a30;
+}
+
+.btn--light {
+  --btn-bg: var(--paper);
+  --btn-fg: var(--ink);
+  --btn-bd: var(--paper);
+  --btn-fill: #ffffff;
+  --btn-fg-hover: var(--ink);
+}
+
+.btn--ghost-light {
+  --btn-fg: var(--paper);
+  --btn-bd: rgba(244, 243, 240, 0.4);
+  --btn-fill: var(--paper);
+  --btn-fg-hover: var(--ink);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn--sm {
+  height: 38px;
+  padding: 0 18px;
+}
+
+/* Round icon buttons (carousel, service rows, menu) */
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  transition: background-color 0.35s var(--ease-out), color 0.35s var(--ease-out), border-color 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+}
+
+.icon-btn svg {
+  width: 13px;
+  height: 13px;
+}
+
+.icon-btn:hover,
+.icon-btn.is-solid {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.icon-btn.is-solid:hover {
+  background: #2a2a30;
+}
+
+.icon-btn:disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* ---------- Media ---------- */
+
+.media {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--bone-soft);
+  isolation: isolate;
+}
+
+.media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.media--img {
+  border-radius: var(--radius-img);
+}
+
+.ratio-4-5 {
+  aspect-ratio: 4 / 5;
+}
+
+.ratio-4-3 {
+  aspect-ratio: 4 / 3;
+}
+
+.ratio-3-2 {
+  aspect-ratio: 3 / 2;
+}
+
+.ratio-1-1 {
+  aspect-ratio: 1 / 1;
+}
+
+.ratio-16-9 {
+  aspect-ratio: 16 / 9;
+}
+
+/* Paper card used for drawings shown uncropped */
+.media--paper {
+  background: #ffffff;
+  display: grid;
+  place-items: center;
+  padding: clamp(20px, 3vw, 44px);
+}
+
+.media--paper img {
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+/* ---------- Reveal states (only when JS + motion are available) ---------- */
+
+/* `.is-in` / `.is-revealed` are added when an element's entrance finishes, so clearing
+   GSAP's inline styles never drops it back into the hidden starting state. */
+html.motion [data-reveal]:not(.is-in) {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+html.motion [data-reveal='fade']:not(.is-in) {
+  transform: none;
+}
+
+html.motion [data-split] {
+  visibility: hidden;
+}
+
+html.motion [data-split].is-split {
+  visibility: visible;
+}
+
+.split-line {
+  display: block;
+  overflow: clip;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+html.motion [data-media-reveal]:not(.is-revealed) {
+  clip-path: inset(100% 0 0 0);
+}
+
+html.motion [data-media-reveal]:not(.is-revealed) img {
+  transform: scale(1.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

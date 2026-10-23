@@ -1,0 +1,75 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
+import CtaGlow from '../components/CtaGlow.astro';
+import Marquee from '../components/Marquee.astro';
+import { services } from '../data/services.js';
+
+const enquiryType = {
+  architecture: 'Architecture',
+  'interior-design': 'Interiors',
+  'hospitality-retail': 'Hospitality',
+  workspaces: 'Workspace',
+  institutional: 'Other',
+  'master-planning': 'Other',
+};
+---
+
+<Base title="Services" description="Architecture, interior design, hospitality & retail, workspaces, institutional and master planning — six disciplines from TruQ Design Studio.">
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="label" data-reveal>(Services)</p>
+      <h1 class="display h1 page-hero__title" data-split>
+        <span class="h-line">Six disciplines,</span>
+        <em class="h-line">one point of view.</em>
+      </h1>
+      <p class="lead" data-reveal>TruQ works across architecture, interiors, hospitality, workspaces, institutions and master planning — with the same eye for detail at every scale.</p>
+    </div>
+  </section>
+
+  <section class="services-index rule-top">
+    <div class="wrap">
+      <ul class="svc-list svc-list--index">
+        {services.map(s => (
+          <li data-reveal>
+            <a href={`#${s.slug}`} class="svc-row svc-row--index">
+              <span class="label">({s.no})</span>
+              <span class="svc-row__title">{s.title}</span>
+              <span class="svc-row__text">{s.text}</span>
+              <Icon name="arrow" class="svc-row__mini" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section services-detail">
+    <div class="wrap">
+      {services.map((s, i) => (
+        <article class:list={['svc-detail', { 'is-flipped': i % 2 === 1 }]} id={s.slug}>
+          <div class="media media--img svc-detail__media" data-media-reveal data-parallax>
+            <Image src={s.image} alt={`${s.title} by TruQ Design Studio`} widths={[480, 768, 1080, 1440]} sizes="(min-width: 1024px) 46vw, 100vw" />
+          </div>
+          <div class="svc-detail__text">
+            <p class="label" data-reveal>Service ({s.no})</p>
+            <h2 class="h3" data-split>{s.title}</h2>
+            <p class="svc-detail__lead" data-reveal>{s.text}</p>
+            <p class="label svc-detail__dl" data-reveal>Deliverables</p>
+            <ul class="deliverables" data-reveal>
+              {s.deliverables.map(d => <li>{d}</li>)}
+            </ul>
+            <div data-reveal>
+              <Button enquiry service={enquiryType[s.slug]}>Enquire about this service</Button>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <CtaGlow label="(Begin)" title="Have a project that crosses two of these disciplines?" align="left" />
+  <Marquee words={['Architecture', 'Interiors', 'Hospitality', 'Workspaces', 'Institutional', 'Master planning']} />
+</Base>

@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
+import SectionHead from '../components/SectionHead.astro';
+import CtaGlow from '../components/CtaGlow.astro';
+import MapArt from '../components/MapArt.astro';
+import { site, offices } from '../data/site.js';
+---
+
+<Base title="Contact" description="Residences, estates, hospitality, workspaces and institutional enquiries across the USA, India and Dubai. Tell us about your space.">
+  <section class="page-hero contact-hero">
+    <div class="wrap contact-hero__grid">
+      <div>
+        <p class="label" data-reveal>(Contact)</p>
+        <h1 class="display h1 page-hero__title" data-split>
+          <span class="h-line">We’d love</span>
+          <em class="h-line">to hear from you.</em>
+        </h1>
+      </div>
+      <div class="contact-hero__aside">
+        <p class="body-sm" data-reveal>Residences, estates, hospitality, workspaces and institutional enquiries across the USA, India and Dubai. Tell us about your space and our team will be in touch.</p>
+        <div data-reveal>
+          <Button enquiry variant="dark" dot>Begin a project enquiry</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-lines rule-top">
+    <div class="wrap contact-lines__grid">
+      <a class="contact-line" href={`mailto:${site.email}`} data-reveal>
+        <span class="label"><Icon name="mail" /> General studio</span>
+        <span class="contact-line__value link-line">{site.email}</span>
+      </a>
+      <a class="contact-line" href={site.phoneHref} data-reveal>
+        <span class="label"><Icon name="phone" /> Studio direct</span>
+        <span class="contact-line__value link-line">{site.phone}</span>
+      </a>
+      <div class="contact-line" data-reveal>
+        <span class="label"><Icon name="pin" /> Studios</span>
+        <span class="contact-line__value">{site.studios.join(' · ')}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section rule-top">
+    <div class="wrap">
+      <SectionHead label="Our studios" title="Three studios," soft="one practice." />
+      <div class="offices">
+        {offices.map(o => (
+          <article class="office" data-reveal>
+            <div class="media office__map">
+              <MapArt seed={o.seed} />
+              <span class="pill"><span class="btn__dot"></span>{o.name} studio</span>
+            </div>
+            <p class="label office__no">( {o.no} ) {o.region}</p>
+            <h3 class="office__name">{o.name}</h3>
+            <p class="body-sm office__addr">Studio address to be added</p>
+            <dl class="office__rows">
+              <div><dt class="label">Email</dt><dd><a class="link-line" href={`mailto:${o.email}`}>{o.email}</a></dd></div>
+              <div><dt class="label">Phone</dt><dd>{o.phone}</dd></div>
+              <div><dt class="label">Visits</dt><dd>By appointment</dd></div>
+            </dl>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaGlow title="Ready when you are." button="Tell us about your project" />
+</Base>

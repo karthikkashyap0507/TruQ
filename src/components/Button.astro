@@ -1,0 +1,35 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site.js';
+
+// variant: dark | light | outline | ghost-light
+// `enquiry` buttons are mailto links that the enquiry modal script takes over.
+const {
+  href,
+  variant = 'outline',
+  dot = false,
+  arrow = true,
+  icon = 'arrow',
+  block = false,
+  enquiry = false,
+  service,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const classes = ['btn', variant !== 'outline' && `btn--${variant}`, block && 'btn--block', className].filter(Boolean).join(' ');
+const link = enquiry ? `mailto:${site.email}?subject=${encodeURIComponent('Project enquiry')}` : href;
+const Tag = link ? 'a' : 'button';
+const attrs = Tag === 'button' ? { type: 'button', ...rest } : { href: link, ...rest };
+if (enquiry) {
+  attrs['data-enquiry'] = '';
+  attrs['aria-haspopup'] = 'dialog';
+  if (service) attrs['data-enquiry-type'] = service;
+}
+---
+
+<Tag class={classes} {...attrs}>
+  {dot && <span class="btn__dot" aria-hidden="true" />}
+  <span><slot /></span>
+  {arrow && <Icon name={icon} class="btn__arrow" />}
+</Tag>

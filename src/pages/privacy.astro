@@ -1,0 +1,16 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site } from '../data/site.js';
+---
+
+<Legal title="Privacy" description="How TruQ Design Studio handles the information you share with us." updated="October 2026">
+  <p>TruQ Design Studio (“we”, “us”) respects your privacy. This page explains what information we collect through this website and how we use it.</p>
+  <h2>Information you share</h2>
+  <p>When you send a project enquiry or email us, we receive the details you choose to provide — such as your name, email address, phone number, project location, approximate area and a description of your project.</p>
+  <h2>How we use it</h2>
+  <p>We use this information only to respond to your enquiry, plan a first conversation and, if we work together, deliver your project. We do not sell or rent your personal information.</p>
+  <h2>Retention</h2>
+  <p>Enquiry details are kept only for as long as needed to respond and to maintain a record of our correspondence. You may ask us to delete them at any time.</p>
+  <h2>Your choices</h2>
+  <p>To access, correct or delete the information you have shared with us, write to <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+</Legal>
