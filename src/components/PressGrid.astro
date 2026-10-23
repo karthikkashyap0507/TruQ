@@ -1,13 +1,21 @@
 ---
 import { Image } from 'astro:assets';
 import { press } from '../data/press.js';
+
+// One feature tile spanning two rows, beside a 2×2 grid. Images are shown whole
+// (contained in a framed tile) so magazine covers and photos are never cropped.
 ---
 
 <div class="press-grid">
-  {press.map((item, i) => (
-    <figure class:list={['press-item', { 'press-item--wide': item.wide }]} data-reveal style={`--i:${i}`}>
-      <div class="media press-item__media" data-media-reveal>
-        <Image src={item.image} alt={item.alt} widths={item.wide ? [480, 768, 1080] : [320, 480, 640]} sizes={item.wide ? '(min-width: 1024px) 30vw, 100vw' : '(min-width: 1024px) 14vw, 50vw'} />
+  {press.map(item => (
+    <figure class:list={['press-item', { 'press-item--feature': item.wide }]} data-reveal>
+      <div class="press-item__frame" data-media-reveal>
+        <Image
+          src={item.image}
+          alt={item.alt}
+          widths={item.wide ? [480, 768, 1080] : [320, 480, 640]}
+          sizes={item.wide ? '(min-width: 860px) 50vw, 100vw' : '(min-width: 860px) 22vw, 50vw'}
+        />
       </div>
       <figcaption class="label">{item.label}</figcaption>
     </figure>

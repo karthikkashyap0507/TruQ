@@ -583,11 +583,8 @@
 
 .creative__portrait {
   aspect-ratio: 4 / 5;
-  max-width: 320px;
-}
-
-.creative__portrait img {
-  object-position: 50% 30%;
+  width: 100%;
+  max-width: 360px;
 }
 
 .quote {
@@ -623,7 +620,7 @@
   }
 
   .creative__portrait {
-    max-width: 240px;
+    max-width: none;
   }
 }
 
